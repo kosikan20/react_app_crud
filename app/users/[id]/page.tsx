@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { User } from '@/features/users/types/user';
 
 interface UserPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 async function getUser(id: string): Promise<User | null> {
@@ -17,8 +17,9 @@ async function getUser(id: string): Promise<User | null> {
   return res.json();
 }
 
-export default async function UserPage({ params }: UserPageProps) {
-  const user = await getUser(params.id);
+export default async function UserPage(context: UserPageProps) {
+  const { id } = await context.params;
+  const user = await getUser(id);
 
   if (!user) return notFound();
 

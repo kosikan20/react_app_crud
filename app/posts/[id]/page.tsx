@@ -2,7 +2,7 @@ import { Post } from '@/features/posts/types/post';
 import { notFound } from 'next/navigation';
 
 interface PostPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 async function getPost(id: string): Promise<Post | null> {
@@ -14,8 +14,9 @@ async function getPost(id: string): Promise<Post | null> {
   return res.json();
 }
 
-export default async function PostPage({ params }: PostPageProps) {
-  const post = await getPost(params.id);
+export default async function PostPage(context: PostPageProps) {
+  const { id } = await context.params;
+  const post = await getPost(id);
 
   if (!post) return notFound();
 
