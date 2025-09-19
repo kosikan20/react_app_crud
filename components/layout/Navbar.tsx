@@ -3,7 +3,8 @@ import Link from 'next/link';
 import LogoutButton from './Logout';
 
 export default async function Navbar() {
-  const userCookie = (await cookies()).get('user');
+  const cookieStore = await cookies();
+  const userCookie = cookieStore.get('user');
   let user = null;
 
   if (userCookie) {

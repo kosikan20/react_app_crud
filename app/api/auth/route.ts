@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
       {
         httpOnly: true,
         maxAge: 60 * 60 * 24, // 24 hours
+        sameSite: 'strict',
       }
     );
 
